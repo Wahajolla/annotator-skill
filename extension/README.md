@@ -18,6 +18,8 @@ Unlike the bookmarklet, it also works on sites with a strict Content-Security-Po
 
 Click the icon on a page to toggle the toolbar.
 
+**Show all notes (for screenshots):** press **Alt+Shift+N**, or right-click the icon → *Show all notes on this page*. Every note on the page gets an outline, its number and a card with the full text, so one screenshot shows everything. Press it again to hide them. The notes come from the notes server, or from the page's browser storage in copy-only mode.
+
 If the notes server can't be reached, a small "Notes server is offline" card appears above the toolbar with the command to start it. Until the server is back, notes stay in the page's browser storage and don't reach your agent. The card goes away by itself once the server answers (the toolbar checks `/health` every 5 seconds while it's down). The page root also carries `data-annotator-server="online|offline"`, so an agent driving the browser can check it.
 
 ## Sign in with GitHub (who left the note)
@@ -38,6 +40,7 @@ This is a signature, not access control. The notes server has no auth, so anyone
 - The toolbar (React + Agentation, bundled into `dist/toolbar.js`) is injected into the page on click. Nothing runs on pages you haven't clicked.
 - The toolbar's `fetch` and `EventSource` are rewired at build time to a message bridge: page → content script → service worker → notes server. The page's CSP and CORS never apply to those requests. The service worker only talks to the configured server, and it strips the `Origin` header so the server accepts it like a CLI client.
 - Signed in: the service worker adds your GitHub login to note create/edit requests on the way out.
+- *Show all notes* injects `dist/notes.js`, a small bundle of [`embed/notes.js`](../embed/notes.js), through the same bridge.
 - Live updates become polling: the session is re-fetched every 5 seconds. Notes other people delete disappear for you after a page reload.
 
 Limits: Chrome blocks extensions on `chrome://` pages and on the Web Store. The toolbar is desktop only.

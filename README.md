@@ -61,7 +61,7 @@ No server at all? The toolbar also works **copy-only**: press Copy and paste the
 | Your React app | `<Agentation endpoint="http://localhost:4747" />` | gate it to dev builds |
 | Any HTML page | one `<script>` tag (below) | works without React |
 | Any site, no code changes | bookmarklet (below) | blocked on strict-CSP sites |
-| Any site, including GitHub and Notion | [Chrome extension](extension/README.md) | no CSP or CORS setup, warns when the notes server is offline, optional GitHub sign-in |
+| Any site, including GitHub and Notion | [Chrome extension](extension/README.md) | no CSP or CORS setup, warns when the notes server is offline, Alt+Shift+N shows all notes for a screenshot, optional GitHub sign-in |
 
 <details>
 <summary><b>Script tag and bookmarklet</b></summary>
@@ -77,6 +77,8 @@ Bookmarklet (save it as a bookmark; clicking it toggles the toolbar):
 ```
 javascript:(()=>{const s=document.createElement('script');s.type='module';s.src='https://cdn.jsdelivr.net/gh/Wahajolla/annotator-skill@v0.4.0/embed/annotator.js?endpoint=http://localhost:4747&t='+Date.now();document.head.appendChild(s)})()
 ```
+
+To show every note at once (an outline and a full-text card per note, for screenshots), load [`embed/notes.js`](embed/notes.js) the same way with `?endpoint=…`. Or set `window.ANNOTATOR_NOTES = [{selector, comment}]` first, which is how an agent draws its own notes on a page.
 
 [`embed/annotator.js`](embed/annotator.js) takes `endpoint`, `session`, `app` and `hash=1`. Leave out `endpoint` for copy-only mode, and add `session` for shared mode. On a public site, start the notes server with `AGENTATION_CORS_ORIGINS=https://that-site.com`.
 

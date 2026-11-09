@@ -1,6 +1,6 @@
 {
   "name": "annotator",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Click-to-comment feedback on any web page (Agentation) that Claude reads back and applies. Local mode on localhost, or shared mode with a self-hosted notes server. Works in your app, via a script tag, or as a bookmarklet on any site.",
   "author": {
     "name": "Wahajolla",

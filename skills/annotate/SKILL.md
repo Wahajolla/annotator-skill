@@ -64,6 +64,25 @@ Notes persist in `~/.agentation/store.db`.
 - Useful fields are `comment`, `url`, `element`, `elementPath`, `fullPath`, `nearbyText`, `selectedText`, `boundingBox` and `reactComponents` (dev builds only).
 - Let the user decide before deleting anything.
 
+## Showing notes for screenshots
+
+Agentation shows a note's text only while you hover its marker. To show all of them at once, use the notes layer: an outline, a number and a full-text card for each note. When it's done drawing, `<html>` gets `data-annotator-notes="<count>"`.
+
+- **The user, in Chrome:** Alt+Shift+N in the extension (or right-click the icon → *Show all notes on this page*).
+- **You, on a page you're driving** (Playwright, Chrome DevTools MCP, etc.): set your own notes and load the layer, then wait for the attribute and screenshot:
+  ```js
+  window.ANNOTATOR_NOTES = [
+    { selector: "h1", comment: "Too long. Make it “Simple pricing”", author: "claude" },
+    { selector: "#cta", comment: "Use the brand blue" },
+  ]
+  const s = document.createElement("script"); s.type = "module"
+  s.src = "https://cdn.jsdelivr.net/gh/Wahajolla/annotator-skill@v0.6.0/embed/notes.js?t=" + Date.now()
+  document.head.appendChild(s)
+  ```
+  Each note takes `selector` (or `boundingBox: {x, y, width, height}` in page coordinates), `comment`, and an optional `author`. Notes whose selector matches nothing are skipped with a console warning, so check that the count matches. Instead of `ANNOTATOR_NOTES`, pass `?endpoint=http://localhost:4747` to show the server's notes for that page; add `&all=1` to include resolved ones. Loading it again with a new `t` hides the layer.
+- Strict-CSP sites (GitHub and others) block that script. In Playwright, create the context with `bypassCSP: true`; otherwise use the extension.
+- **To make your notes real** (the user sees them in their toolbar too, and they can resolve them): `POST /sessions` with `{"url": "<page url>"}` and then `POST /sessions/:id/annotations` with `comment`, `element`, `elementPath` (a CSS selector), `url`, `boundingBox` and `x`/`y` (page coordinates). Then show them with `?endpoint=…`. Ask the user first: these become shared notes.
+
 ## Pitfalls
 
 - The toolbar is desktop only.

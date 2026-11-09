@@ -1,9 +1,11 @@
 {
   "name": "annotator-extension",
   "private": true,
-  "version": "0.5.0",
+  "version": "0.6.0",
   "scripts": {
-    "build": "esbuild src/toolbar.jsx --bundle --minify --format=iife --target=chrome120 --define:process.env.NODE_ENV='\"production\"' --define:fetch=bridgeFetch --define:EventSource=BridgeEventSource --inject:src/bridge-main.js --outfile=dist/toolbar.js --legal-comments=none"
+    "build": "npm run build:toolbar && npm run build:notes",
+    "build:toolbar": "esbuild src/toolbar.jsx --bundle --minify --format=iife --target=chrome120 --define:process.env.NODE_ENV='\"production\"' --define:fetch=bridgeFetch --define:EventSource=BridgeEventSource --inject:src/bridge-main.js --outfile=dist/toolbar.js --legal-comments=none",
+    "build:notes": "esbuild src/notes-entry.js --bundle --minify --format=iife --target=chrome120 --define:process.env.NODE_ENV='\"production\"' --define:fetch=bridgeFetch --define:EventSource=BridgeEventSource --inject:src/bridge-main.js --outfile=dist/notes.js --legal-comments=none"
   },
   "devDependencies": {
     "agentation": "3.1.2",

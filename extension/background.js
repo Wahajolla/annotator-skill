@@ -1,5 +1,6 @@
 // Annotator extension service worker.
 // - Toolbar button / Alt+Shift+A: inject the bridge + toolbar into the active tab (toggle).
+// - Alt+Shift+N / icon context menu: show all notes on the page (toggle), for screenshots.
 // - Relays the toolbar's HTTP calls to the notes server, only to the configured endpoint.
 // - Strips the Origin header on those calls, so agentation-mcp treats them like a CLI client
 //   and no CORS setup is needed for whatever site you annotate.
@@ -36,7 +37,8 @@ chrome.runtime.onInstalled.addListener(syncOriginRule)
 chrome.runtime.onStartup.addListener(syncOriginRule)
 chrome.storage.onChanged.addListener(syncOriginRule)
 
-async function toggle(tab) {
+/** Injects the bridge and config, then one of the page bundles. A second run toggles it off. */
+async function inject(tab, file) {
   if (!tab?.id) return
   const cfg = await getConfig()
   const target = { tabId: tab.id }
@@ -47,7 +49,7 @@ async function toggle(tab) {
       func: (c) => { window.__ANNOTATOR_CONFIG__ = c },
       args: [{ endpoint: cfg.endpoint, session: cfg.session, app: cfg.app, hash: cfg.hash }],
     })
-    await chrome.scripting.executeScript({ target, world: "MAIN", files: ["dist/toolbar.js"] })
+    await chrome.scripting.executeScript({ target, world: "MAIN", files: [file] })
   } catch (e) {
     // chrome://, the Web Store and similar pages can't be scripted.
     console.warn("[annotator] cannot annotate this page:", e?.message ?? e)
@@ -55,8 +57,20 @@ async function toggle(tab) {
     setTimeout(() => chrome.action.setBadgeText({ tabId: tab.id, text: "" }), 1500)
   }
 }
+const toggle = (tab) => inject(tab, "dist/toolbar.js")
+const showNotes = (tab) => inject(tab, "dist/notes.js")
+
 chrome.action.onClicked.addListener(toggle)
+chrome.commands.onCommand.addListener(async (cmd, tab) => {
+  if (cmd === "show-notes") showNotes(tab ?? (await chrome.tabs.query({ active: true, currentWindow: true }))[0])
+})
+// Right-click the toolbar icon → "Show all notes on this page".
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.contextMenus.create({ id: "show-notes", title: "Show all notes on this page (Alt+Shift+N)", contexts: ["action"] })
+})
+chrome.contextMenus.onClicked.addListener((info, tab) => { if (info.menuItemId === "show-notes") showNotes(tab) })
 globalThis.annotatorToggle = toggle // for automated tests
+globalThis.annotatorShowNotes = showNotes
 
 chrome.runtime.onMessage.addListener((msg, sender, reply) => {
   if (msg?.type !== "annotator-fetch" || !sender.tab) return
