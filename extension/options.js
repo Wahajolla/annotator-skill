@@ -31,6 +31,7 @@ $("save").addEventListener("click", async () => {
     clientId: $("clientId").value.trim(),
   })
   show("Saved")
+  await renderAccount()
 })
 
 function show(text, error = false) {
@@ -42,8 +43,10 @@ function show(text, error = false) {
 // --- GitHub account ---
 async function renderAccount() {
   const me = await getIdentity()
+  const configured = !!($("clientId").value.trim() || DEFAULT_CLIENT_ID)
+  $("no-client").hidden = configured || !!me
   $("signed-in").hidden = !me
-  $("signed-out").hidden = !!me
+  $("signed-out").hidden = !!me || !configured
   if (me) {
     $("login").textContent = "@" + me.login
     $("avatar").src = me.avatar
