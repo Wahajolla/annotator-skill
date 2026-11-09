@@ -39,8 +39,8 @@ The skill is `annotator:annotate`. To update the plugin later, run `/plugin mark
 
 **Chrome extension** (optional, the easiest way to annotate any site):
 
-1. Download `annotator-extension.zip` from the [latest release](https://github.com/Wahajolla/annotator-skill/releases/latest) and unzip it.
-2. Open `chrome://extensions`, turn on **Developer mode**, click **Load unpacked** and pick the folder.
+1. Download `annotator-extension.zip` from the [latest release](https://github.com/Wahajolla/annotator-skill/releases/latest) and unzip it somewhere permanent, e.g. `~/Extensions/`. Chrome loads the extension from that folder, so don't delete it.
+2. Open `chrome://extensions`, turn on **Developer mode**, click **Load unpacked** and pick the unzipped `annotator-extension` folder. Dragging the `.zip` onto the page doesn't work: Chrome only installs zips from the Web Store.
 3. Press **Alt+Shift+A** on any page.
 
 ## Two modes

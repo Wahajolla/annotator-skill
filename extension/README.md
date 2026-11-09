@@ -6,8 +6,8 @@ Unlike the bookmarklet, it also works on sites with a strict Content-Security-Po
 
 ## Install
 
-1. Download `annotator-extension.zip` from the [latest release](https://github.com/Wahajolla/annotator-skill/releases/latest) and unzip it. Or clone this repo and use the `extension/` folder.
-2. Open `chrome://extensions`, turn on **Developer mode**, click **Load unpacked**, and pick the folder.
+1. Download `annotator-extension.zip` from the [latest release](https://github.com/Wahajolla/annotator-skill/releases/latest) and unzip it somewhere permanent, e.g. `~/Extensions/`. Or clone this repo and use the `extension/` folder. Chrome loads the extension from that folder, so keep it.
+2. Open `chrome://extensions`, turn on **Developer mode**, click **Load unpacked**, and pick the unzipped folder. Dragging the `.zip` onto the page fails with "Could not unzip extension": Chrome only installs zips from the Web Store.
 3. Pin the Annotator icon.
 
 ## Use
