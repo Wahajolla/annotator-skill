@@ -1,7 +1,7 @@
 {
   "name": "annotator-extension",
   "private": true,
-  "version": "0.4.0",
+  "version": "0.5.0",
   "scripts": {
     "build": "esbuild src/toolbar.jsx --bundle --minify --format=iife --target=chrome120 --define:process.env.NODE_ENV='\"production\"' --define:fetch=bridgeFetch --define:EventSource=BridgeEventSource --inject:src/bridge-main.js --outfile=dist/toolbar.js --legal-comments=none"
   },

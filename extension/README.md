@@ -18,6 +18,8 @@ Unlike the bookmarklet, it also works on sites with a strict Content-Security-Po
 
 Click the icon on a page to toggle the toolbar.
 
+If the notes server can't be reached, a small "Notes server is offline" card appears above the toolbar with the command to start it. Until the server is back, notes stay in the page's browser storage and don't reach your agent. The card goes away by itself once the server answers (the toolbar checks `/health` every 5 seconds while it's down). The page root also carries `data-annotator-server="online|offline"`, so an agent driving the browser can check it.
+
 ## Sign in with GitHub (who left the note)
 
 In the extension options, click **Sign in with GitHub**. A GitHub tab opens and the code is already in your clipboard: paste it and approve. After that, every note you create is signed:

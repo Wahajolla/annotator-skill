@@ -3,6 +3,7 @@
 import React from "react"
 import { createRoot } from "react-dom/client"
 import { Agentation } from "agentation"
+import { ServerStatus } from "./server-status.jsx"
 
 const ID = "annotator-ext-root"
 const existing = document.getElementById(ID)
@@ -18,11 +19,14 @@ if (existing) {
   const root = createRoot(host)
   window.__annotatorExtRoot = root
   root.render(
-    <Agentation
-      endpoint={cfg.endpoint || undefined}
-      sessionId={cfg.session || undefined}
-      appName={cfg.app || undefined}
-      useHashLocation={!!cfg.hash}
-    />,
+    <>
+      <Agentation
+        endpoint={cfg.endpoint || undefined}
+        sessionId={cfg.session || undefined}
+        appName={cfg.app || undefined}
+        useHashLocation={!!cfg.hash}
+      />
+      {cfg.endpoint && <ServerStatus endpoint={cfg.endpoint} host={host} />}
+    </>,
   )
 }

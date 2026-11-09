@@ -61,7 +61,7 @@ No server at all? The toolbar also works **copy-only**: press Copy and paste the
 | Your React app | `<Agentation endpoint="http://localhost:4747" />` | gate it to dev builds |
 | Any HTML page | one `<script>` tag (below) | works without React |
 | Any site, no code changes | bookmarklet (below) | blocked on strict-CSP sites |
-| Any site, including GitHub and Notion | [Chrome extension](extension/README.md) | no CSP or CORS setup, optional GitHub sign-in |
+| Any site, including GitHub and Notion | [Chrome extension](extension/README.md) | no CSP or CORS setup, warns when the notes server is offline, optional GitHub sign-in |
 
 <details>
 <summary><b>Script tag and bookmarklet</b></summary>
