@@ -14,7 +14,7 @@ Built on [Agentation](https://github.com/benjitaylor/agentation): the `agentatio
 Ask the user if it isn't obvious:
 
 - **Local**: just the user and Claude, on this machine. The notes server runs on `localhost:4747`. Nothing gets deployed. This is the default.
-- **Shared**: colleagues comment on a hosted site, and everyone sees everyone's notes. It needs a notes server on a public HTTPS host. See [references/shared.md](references/shared.md). That page describes the architecture and requirements; the user chooses the hosting. [examples/railway/](examples/railway/README.md) is one worked example, not a requirement.
+- **Shared**: colleagues comment on a hosted site, and everyone sees everyone's notes. It needs a notes server on a public HTTPS host. See [references/shared.md](references/shared.md). That page describes the architecture and requirements; the user chooses the hosting.
 
 ## Where the toolbar goes
 

@@ -1,6 +1,6 @@
 # Shared mode: architecture and how to deploy it
 
-Colleagues open a hosted site, pin notes, and everyone sees everyone's notes. Claude reads them over HTTP. Any host works. This page lists what each piece needs. Agree on the hosting with the user. [examples/railway](../examples/railway/README.md) is one full worked setup.
+Colleagues open a hosted site, pin notes, and everyone sees everyone's notes. Claude reads them over HTTP. Any host works. This page lists what each piece needs. Agree on the hosting with the user.
 
 The guiding requirement is **never lose a note**. Most choices below follow from it.
 
@@ -61,7 +61,7 @@ Use any of the options from SKILL.md, with `endpoint=https://<notes>` and `sessi
 
 ## 4. Hosting the site (only if it isn't hosted yet)
 
-Any static host works, for example Netlify, Vercel, Cloudflare Pages, GitHub Pages, S3 behind a CDN, or a bucket plus a tiny function (the Railway example). For a private review, put Basic auth or the platform's password protection in front. The notes server stays CORS-only, because the toolbar calls it directly from the page.
+Any static host works, for example Netlify, Vercel, Cloudflare Pages, GitHub Pages, S3 behind a CDN. For a private review, put Basic auth or the platform's password protection in front. The notes server stays CORS-only, because the toolbar calls it directly from the page.
 
 ## 5. Backups (always)
 
@@ -74,7 +74,7 @@ for id in $(curl -fsS https://<notes>/sessions | jq -r '(if type=="array" then .
 done | jq -s '{takenAt: (now|todate), sessions: .}' > "notes-$(date -u +%Y%m%dT%H%M%SZ).json"
 ```
 
-Run it from cron, CI on a schedule, or a platform cron job. [backup-function.ts](../examples/railway/backup-function.ts) is a fuller version for any S3-compatible bucket: it keeps `latest.json` and writes a snapshot only when something changed.
+Run it from cron, CI on a schedule, or a platform cron job. To save space, keep a snapshot only when it differs from the previous one.
 
 **Restore:** take a snapshot and POST its annotations to `/sessions/<id>/annotations`.
 

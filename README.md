@@ -48,7 +48,7 @@ The skill is `annotator:annotate`. To update the plugin later, run `/plugin mark
 |  | Local | Shared |
 |---|---|---|
 | Who comments | you | you and your colleagues |
-| Notes server | `localhost:4747`, started by Claude Code (MCP) or `npx -y agentation-mcp server` | hosted wherever you like: Docker, VPS, Fly, Render, Railway… |
+| Notes server | `localhost:4747`, started by Claude Code (MCP) or `npx -y agentation-mcp server` | hosted wherever you like: Docker, a VPS, any PaaS… |
 | Setup | none | [references/shared.md](skills/annotate/references/shared.md): persistent disk, HTTPS, CORS, one shared session, backups |
 | Who wrote a note | always you | GitHub sign-in in the extension |
 
