@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Annotator",
+  "version": "0.3.0",
+  "description": "Click any element on any page and leave a note for your coding agent (Agentation toolbar, local or shared notes server).",
+  "action": { "default_title": "Toggle Annotator (Alt+Shift+A)" },
+  "commands": {
+    "_execute_action": { "suggested_key": { "default": "Alt+Shift+A" }, "description": "Toggle the annotation toolbar" }
+  },
+  "background": { "service_worker": "background.js", "type": "module" },
+  "options_page": "options.html",
+  "permissions": ["activeTab", "scripting", "storage", "declarativeNetRequestWithHostAccess"],
+  "host_permissions": ["http://localhost/*", "http://127.0.0.1/*"],
+  "optional_host_permissions": ["https://*/*", "http://*/*"]
+}

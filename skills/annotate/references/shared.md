@@ -52,11 +52,12 @@ Notes are still filtered per page by URL.
 
 ## 3. Toolbar on the shared site
 
-Use any of the three options from SKILL.md, with `endpoint=https://<notes>` and `session=<id>`:
+Use any of the options from SKILL.md, with `endpoint=https://<notes>` and `session=<id>`:
 
 - **In the app:** add a separate build (e.g. `build:deploy`) that sets `VITE_AGENTATION_URL` and `VITE_AGENTATION_SESSION`. Render `<Agentation>` only when they are set, so production and local builds stay clean.
 - **Script tag:** `annotator.js?endpoint=https://<notes>&session=<id>&app=<Name>`.
 - **Bookmarklet:** good for reviewing a site you can't change. Every reviewer installs the same bookmarklet with the same `session`.
+- **Chrome extension:** every reviewer sets the server URL and session in the extension options. It works on strict-CSP sites, and the server needs no CORS entry for it.
 
 ## 4. Hosting the site (only if it isn't hosted yet)
 

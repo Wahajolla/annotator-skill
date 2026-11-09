@@ -1,0 +1,14 @@
+{
+  "name": "annotator-extension",
+  "private": true,
+  "version": "0.3.0",
+  "scripts": {
+    "build": "esbuild src/toolbar.jsx --bundle --minify --format=iife --target=chrome120 --define:process.env.NODE_ENV='\"production\"' --define:fetch=bridgeFetch --define:EventSource=BridgeEventSource --inject:src/bridge-main.js --outfile=dist/toolbar.js --legal-comments=none"
+  },
+  "devDependencies": {
+    "agentation": "3.1.2",
+    "esbuild": "0.25.10",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  }
+}

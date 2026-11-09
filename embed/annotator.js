@@ -9,7 +9,7 @@
 //   hash=1    keep notes per #route (hash-router apps).
 //
 // Usage:
-//   <script type="module" src="https://cdn.jsdelivr.net/gh/Wahajolla/annotator-skill@v0.2.0/embed/annotator.js?endpoint=http://localhost:4747"></script>
+//   <script type="module" src="https://cdn.jsdelivr.net/gh/Wahajolla/annotator-skill@v0.3.0/embed/annotator.js?endpoint=http://localhost:4747"></script>
 // or as a bookmarklet (see README). Loading it a second time toggles the toolbar off.
 
 const REACT = "18.3.1"
