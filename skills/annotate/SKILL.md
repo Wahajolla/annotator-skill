@@ -27,19 +27,19 @@ Choose by what the page is. The same options work in both modes; only `endpoint`
    Add `useHashLocation` for hash routers and `appName` to label the feedback.
 2. **Any HTML page they control, React or not.** Add one script tag. The [loader](../../embed/annotator.js) mounts the toolbar in its own container and its own React root, so it does not touch the host page:
    ```html
-   <script type="module" src="https://cdn.jsdelivr.net/gh/Wahajolla/annotator-skill@v0.3.0/embed/annotator.js?endpoint=http://localhost:4747"></script>
+   <script type="module" src="https://cdn.jsdelivr.net/gh/Wahajolla/annotator-skill@v0.4.0/embed/annotator.js?endpoint=http://localhost:4747"></script>
    ```
    Query params: `endpoint`, `session`, `app`, `hash=1`. Alternatively, set `window.ANNOTATOR_CONFIG = {endpoint, session, app, hash}` before the script loads.
 3. **Any site at all, without touching its code.** Use a bookmarklet. Give the user this line to save as a bookmark; clicking it toggles the toolbar on and off:
    ```
-   javascript:(()=>{const s=document.createElement('script');s.type='module';s.src='https://cdn.jsdelivr.net/gh/Wahajolla/annotator-skill@v0.3.0/embed/annotator.js?endpoint=http://localhost:4747&t='+Date.now();document.head.appendChild(s)})()
+   javascript:(()=>{const s=document.createElement('script');s.type='module';s.src='https://cdn.jsdelivr.net/gh/Wahajolla/annotator-skill@v0.4.0/embed/annotator.js?endpoint=http://localhost:4747&t='+Date.now();document.head.appendChild(s)})()
    ```
    Limits to tell the user about:
    - Sites with a strict Content-Security-Policy (GitHub, many banks and big apps) block the injected scripts, so the toolbar won't appear there.
    - On a public `https://` site that talks to `localhost`, the browser may ask for local network access: allow it.
    - The notes server must allow that site's origin (see CORS below).
    - Notes are tied to the site's URL, and the toolbar's local drafts live in that site's localStorage.
-4. **Chrome extension.** This is the most robust way to annotate any site. It toggles with one click or Alt+Shift+A, works on strict-CSP sites (GitHub, Notion, etc.), and needs no CORS setup: requests go through the extension. Install: download `annotator-extension.zip` from https://github.com/Wahajolla/annotator-skill/releases/latest, then `chrome://extensions` → Developer mode → Load unpacked. The notes server is set in the extension options. It defaults to `http://localhost:4747`; for shared mode, use the hosted URL plus the session id. Live sync is polling every 5 seconds.
+4. **Chrome extension.** This is the most robust way to annotate any site. It toggles with one click or Alt+Shift+A, works on strict-CSP sites (GitHub, Notion, etc.), and needs no CORS setup: requests go through the extension. Install: download `annotator-extension.zip` from https://github.com/Wahajolla/annotator-skill/releases/latest, then `chrome://extensions` → Developer mode → Load unpacked. The notes server is set in the extension options. It defaults to `http://localhost:4747`; for shared mode, use the hosted URL plus the session id. Live sync is polling every 5 seconds. In the options, "Sign in with GitHub" signs every note with the user's login, so colleagues' notes show who left them.
 
 Without `endpoint` the toolbar runs **copy-only**. Notes stay in the browser, and the user presses Copy and pastes the markdown into the chat. This needs no server, so use it when the user only wants it once.
 
@@ -60,6 +60,7 @@ Notes persist in `~/.agentation/store.db`.
 
 - MCP: `agentation_get_all_pending`, then fix the code, then `agentation_resolve` with a short summary.
 - HTTP: `GET /pending` (all open notes), `GET /sessions`, `GET /sessions/:id`. After fixing a note, send `PATCH /annotations/:id` with `{"status":"resolved"}`.
+- **Who wrote it:** notes from the Chrome extension with GitHub sign-in carry `authorId: "github:<login>"`, and by default the comment starts with `@<login>: `. A note with no `authorId` is anonymous (any other way of loading the toolbar). Mention the author when you report back.
 - Useful fields are `comment`, `url`, `element`, `elementPath`, `fullPath`, `nearbyText`, `selectedText`, `boundingBox` and `reactComponents` (dev builds only).
 - Let the user decide before deleting anything.
 

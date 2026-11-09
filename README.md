@@ -32,14 +32,14 @@ The skill is `annotator:annotate`.
 1. **In your React app:** `<Agentation endpoint="http://localhost:4747" />`, gated to dev builds.
 2. **On any HTML page, React or not:**
    ```html
-   <script type="module" src="https://cdn.jsdelivr.net/gh/Wahajolla/annotator-skill@v0.3.0/embed/annotator.js?endpoint=http://localhost:4747"></script>
+   <script type="module" src="https://cdn.jsdelivr.net/gh/Wahajolla/annotator-skill@v0.4.0/embed/annotator.js?endpoint=http://localhost:4747"></script>
    ```
 3. **On any site, without touching its code:** save this as a bookmark. Clicking it toggles the toolbar on and off:
    ```
-   javascript:(()=>{const s=document.createElement('script');s.type='module';s.src='https://cdn.jsdelivr.net/gh/Wahajolla/annotator-skill@v0.3.0/embed/annotator.js?endpoint=http://localhost:4747&t='+Date.now();document.head.appendChild(s)})()
+   javascript:(()=>{const s=document.createElement('script');s.type='module';s.src='https://cdn.jsdelivr.net/gh/Wahajolla/annotator-skill@v0.4.0/embed/annotator.js?endpoint=http://localhost:4747&t='+Date.now();document.head.appendChild(s)})()
    ```
    On a public site, start the notes server with `AGENTATION_CORS_ORIGINS=https://that-site.com`. Sites with a strict Content-Security-Policy block the injected scripts, so the toolbar won't load there. Use the extension for those.
-4. **Chrome extension:** one click or Alt+Shift+A on any page, including strict-CSP sites like GitHub, with no CORS setup. See [extension/](extension/README.md); install it from the [latest release](https://github.com/Wahajolla/annotator-skill/releases/latest) with Load unpacked.
+4. **Chrome extension:** one click or Alt+Shift+A on any page, including strict-CSP sites like GitHub, with no CORS setup. Sign in with GitHub so every note shows who left it. See [extension/](extension/README.md); install it from the [latest release](https://github.com/Wahajolla/annotator-skill/releases/latest) with Load unpacked.
 
 [`embed/annotator.js`](embed/annotator.js) takes `endpoint`, `session`, `app` and `hash=1` as query params. Leave out `endpoint` for copy-only mode, and add `session` for shared mode.
 

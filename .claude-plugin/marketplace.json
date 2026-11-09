@@ -12,7 +12,7 @@
       "name": "annotator",
       "source": "./",
       "description": "Click-to-comment feedback on any web page (Agentation) that Claude reads back and applies. Local mode on localhost, or shared mode with a self-hosted notes server. Works in your app, via a script tag, or as a bookmarklet on any site.",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "category": "productivity"
     }
   ]

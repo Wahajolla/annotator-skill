@@ -3,7 +3,10 @@
 // - Relays the toolbar's HTTP calls to the notes server, only to the configured endpoint.
 // - Strips the Origin header on those calls, so agentation-mcp treats them like a CLI client
 //   and no CORS setup is needed for whatever site you annotate.
-const DEFAULTS = { endpoint: "http://localhost:4747", session: "", app: "", hash: false }
+// - Signs new and edited notes with your GitHub login (authorId + optional "@login: " prefix).
+import { getIdentity } from "./github.js"
+
+const DEFAULTS = { endpoint: "http://localhost:4747", session: "", app: "", hash: false, showAuthor: true }
 const RULE_ID = 1
 
 export async function getConfig() {
@@ -63,11 +66,8 @@ chrome.runtime.onMessage.addListener((msg, sender, reply) => {
       return reply({ error: "Annotator: request outside the configured notes server" })
     }
     try {
-      const res = await fetch(msg.url, {
-        method: msg.method,
-        headers: msg.headers,
-        body: ["GET", "HEAD"].includes(msg.method) ? undefined : msg.body,
-      })
+      const body = ["GET", "HEAD"].includes(msg.method) ? undefined : await signBody(msg)
+      const res = await fetch(msg.url, { method: msg.method, headers: msg.headers, body })
       reply({
         status: res.status,
         statusText: res.statusText,
@@ -80,3 +80,23 @@ chrome.runtime.onMessage.addListener((msg, sender, reply) => {
   })()
   return true
 })
+
+const AUTHOR_PREFIX = /^@[A-Za-z0-9-]+: /
+
+/** Adds the signed-in GitHub user to notes being created (POST) or edited (PATCH). */
+export async function signBody(msg) {
+  const isCreate = msg.method === "POST" && /\/sessions\/[^/]+\/annotations$/.test(new URL(msg.url).pathname)
+  const isEdit = msg.method === "PATCH" && /\/annotations\/[^/]+$/.test(new URL(msg.url).pathname)
+  if (!msg.body || (!isCreate && !isEdit)) return msg.body
+  const me = await getIdentity()
+  if (!me) return msg.body
+  let data
+  try { data = JSON.parse(msg.body) } catch { return msg.body }
+  const { showAuthor } = await getConfig()
+  if (isCreate) data.authorId = `github:${me.login}`
+  // Edits keep the original author's prefix; only unsigned text gets the editor's name.
+  if (showAuthor && typeof data.comment === "string" && !AUTHOR_PREFIX.test(data.comment)) {
+    data.comment = `@${me.login}: ${data.comment}`
+  }
+  return JSON.stringify(data)
+}
