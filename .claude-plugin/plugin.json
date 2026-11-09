@@ -1,0 +1,10 @@
+{
+  "name": "annotator",
+  "version": "0.1.0",
+  "description": "Shared click-to-comment feedback on any website: Agentation toolbar + self-hosted notes server on Railway with backups. Colleagues pin notes on the live page, Claude reads and applies them.",
+  "author": { "name": "Wahajolla", "url": "https://github.com/Wahajolla" },
+  "homepage": "https://github.com/Wahajolla/annotator-skill",
+  "repository": "https://github.com/Wahajolla/annotator-skill",
+  "license": "MIT",
+  "keywords": ["feedback", "annotations", "comments", "agentation", "railway", "review"]
+}
