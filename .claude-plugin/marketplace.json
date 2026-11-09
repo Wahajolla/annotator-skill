@@ -1,13 +1,18 @@
 {
   "name": "wahajolla",
-  "owner": { "name": "Wahajolla", "url": "https://github.com/Wahajolla" },
-  "metadata": { "description": "Wahajolla's Claude Code plugins" },
+  "owner": {
+    "name": "Wahajolla",
+    "url": "https://github.com/Wahajolla"
+  },
+  "metadata": {
+    "description": "Wahajolla's Claude Code plugins"
+  },
   "plugins": [
     {
       "name": "annotator",
       "source": "./",
-      "description": "Shared click-to-comment feedback on any website (Agentation + Railway notes server with backups); Claude reads the notes back and applies them.",
-      "version": "0.1.0",
+      "description": "Click-to-comment feedback on any web page (Agentation) that Claude reads back and applies. Local mode on localhost, or shared mode with a self-hosted notes server. Works in your app, via a script tag, or as a bookmarklet on any site.",
+      "version": "0.2.0",
       "category": "productivity"
     }
   ]
